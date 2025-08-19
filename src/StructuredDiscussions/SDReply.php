@@ -61,10 +61,17 @@ final class SDReply {
 	/**
 	 * Returns the creator of this comment.
 	 *
-	 * @return string
+	 * @return string|null
 	 */
-	public function getCreator(): string {
-		return $this->replyRevision['creator']['name'];
+	public function getCreator(): ?string {
+		$creator = $this->replyRevision['creator']['name'] ?? null;
+
+		if ( !is_string( $creator ) ) {
+			// https://github.com/WikibaseSolutions/SemanticStructuredDiscussions/issues/19
+			return null;
+		}
+
+		return $creator;
 	}
 
 	/**

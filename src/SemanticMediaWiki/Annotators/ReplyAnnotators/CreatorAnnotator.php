@@ -32,9 +32,15 @@ class CreatorAnnotator extends ReplyAnnotator {
 	 * @inheritDoc
 	 */
 	public function addAnnotation( SemanticData $semanticData ): void {
+		$creator = $this->reply->getCreator();
+
+		if ( $creator === null ) {
+			return;
+		}
+
 		$semanticData->addPropertyObjectValue(
 			new DIProperty( self::getId() ),
-			new SMWDIBlob( $this->reply->getCreator() )
+			new SMWDIBlob( $creator )
 		);
 	}
 
